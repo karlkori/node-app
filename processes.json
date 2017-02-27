@@ -1,0 +1,17 @@
+{
+    "apps": [{
+        "name": "api",
+        "script": "./index.js",
+        "merge_logs": true,
+        "log_date_format": "YYYY-MM-DD HH:mm Z",
+        "instances": 1,
+        "max_memory_restart": "200M",
+        "watch": false,
+        "env_local": {
+            "NODE_ENV": "production",
+            "HOST": "http://127.0.0.1",
+            "PORT": 9999,
+            "APP_NAME": "Test Node.js app"
+        }
+    }]
+}
