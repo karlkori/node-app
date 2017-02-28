@@ -16,11 +16,8 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
-      - aws ecs list-tasks --cluster default --service-name node-app-service
-      - aws ecs list-tasks --cluster default --service-name node-app-service | grep arn
-      - aws ecs list-tasks --cluster default --service-name node-app-service | grep arn | cut -d'"' -f2
       - echo "Rastarting TASK"
-      - task_arn=`aws ecs list-tasks --cluster default --service-name node-app-service | grep arn | cut -d'"' -f2`
+      - task_arn= $(aws ecs list-tasks --cluster default --service-name node-app-service | grep arn | cut -d'"' -f2)
       - echo $task_arn
       - aws ecs stop-task --cluster default --task $task_arn
       - echo "Rastarting TASK  $task_arn"
