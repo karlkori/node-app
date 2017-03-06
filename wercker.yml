@@ -1,0 +1,67 @@
+box: node:7-slim
+
+# dev:
+#   steps:
+#     - script:
+#         name: setup node env
+#         code: |
+#           export NODE_ENV=development
+
+#     - npm-install
+
+#     - internal/watch:
+#         code: npm start
+#         reload: true
+
+build:
+  steps:
+    - script:
+        name: setup node env
+        code: |
+          export NODE_ENV=development
+
+    - npm-install
+
+test:
+  steps:
+    - script:
+        name: run tests
+        code: |
+          npm test
+
+# release-build:
+#   steps:
+#     - script:
+#         name: npm rebuild
+#         code: |
+#           npm rebuild
+
+#     - script:
+#         name: build release code
+#         code: |
+#           npm run build
+#           mv ./build/* $WERCKER_OUTPUT_DIR
+#           mv template.sh $WERCKER_OUTPUT_DIR
+
+push-to-ecr:
+  steps:
+    - script:
+        code: env
+    - internal/docker-push:
+        aws-access-key: $AWS_ACCESS_KEY_ID
+        aws-secret-key: $AWS_SECRET_ACCESS_KEY
+        aws-region: $AWS_REGION
+        aws-registry-id: $AWS_REGISTRY_ID
+        repository: node-app
+        tag: latest-$WERCKER_BRANCH_NAME
+
+deploy-to-ecs:
+  steps:
+    - 1science/aws-ecs:
+        key: $AWS_ACCESS_KEY_ID
+        secret: $AWS_SECRET_ACCESS_KEY
+        cluster-name: $AWS_ECS_CLUSTER
+        service-name: node-app-service
+        task-definition-name: node-app-definition
+        task-definition-file: $WERCKER_SOURCE_DIR/node-app-task-definition.json
+

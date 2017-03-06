@@ -1,0 +1,38 @@
+[{
+    "volumesFrom": [],
+    "memory": null,
+    "extraHosts": null,
+    "dnsServers": null,
+    "disableNetworking": null,
+    "dnsSearchDomains": null,
+    "portMappings": [{
+        "hostPort": 9999,
+        "containerPort": 9999,
+        "protocol": "tcp"
+    }],
+    "hostname": null,
+    "essential": true,
+    "entryPoint": null,
+    "mountPoints": [],
+    "name": "node-app",
+    "ulimits": null,
+    "dockerSecurityOptions": null,
+    "environment": [],
+    "links": null,
+    "workingDirectory": null,
+    "readonlyRootFilesystem": null,
+    "image": "433478262461.dkr.ecr.us-east-1.amazonaws.com/node-app",
+    "command": null,
+    "user": null,
+    "dockerLabels": null,
+    "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+            "awslogs-group": "node-app",
+            "awslogs-region": "us-east-1"
+        }
+    },
+    "cpu": 0,
+    "privileged": null,
+    "memoryReservation": 512
+}]
