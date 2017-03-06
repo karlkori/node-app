@@ -1,0 +1,22 @@
+[{
+    "volumesFrom": [],
+    "portMappings": [{
+        "hostPort": 9999,
+        "containerPort": 9999,
+        "protocol": "tcp"
+    }],
+    "essential": true,
+    "mountPoints": [],
+    "name": "node-app",
+    "environment": [],
+    "image": "433478262461.dkr.ecr.us-east-1.amazonaws.com/node-app:qa",
+    "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+            "awslogs-group": "node-app",
+            "awslogs-region": "us-east-1"
+        }
+    },
+    "cpu": 0,
+    "memoryReservation": 512
+}]
