@@ -8,7 +8,7 @@ build:
           export NODE_ENV=development
     - npm-install
     - script:
-        code: cp ./* $WERCKER_OUTPUT_DIR
+        code: cp -r ./ $WERCKER_OUTPUT_DIR
     - script:
         code: npm i -g pm2
 
