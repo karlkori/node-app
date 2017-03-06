@@ -40,7 +40,7 @@ push-to-ecr:
         aws-region: $AWS_REGION
         aws-registry-id: $AWS_REGISTRY_ID
         repository: node-app
-        tag: latest-$WERCKER_BRANCH_NAME
+        tag: $WERCKER_GIT_BRANCH
 
 deploy-to-ecs:
   steps:
