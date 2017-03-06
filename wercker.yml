@@ -50,6 +50,6 @@ deploy-to-ecs:
         cluster-name: $AWS_ECS_CLUSTER
         service-name: node-app-service
         minimum-running-tasks: 1
-        task-definition-name: node-app-definition
-        task-definition-file: $WERCKER_SOURCE_DIR/node-app-task-definition.json
+        task-definition-name: node-app-task-definition-$WERCKER_GIT_BRANCH
+        task-definition-file: $WERCKER_SOURCE_DIR/node-app-task-definition-$WERCKER_GIT_BRANCH.json
 
