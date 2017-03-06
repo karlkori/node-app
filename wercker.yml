@@ -1,17 +1,4 @@
-box: node:7-slim
-
-# dev:
-#   steps:
-#     - script:
-#         name: setup node env
-#         code: |
-#           export NODE_ENV=development
-
-#     - npm-install
-
-#     - internal/watch:
-#         code: npm start
-#         reload: true
+box: node
 
 build:
   steps:
