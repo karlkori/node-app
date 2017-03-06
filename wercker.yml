@@ -6,8 +6,11 @@ build:
         name: setup node env
         code: |
           export NODE_ENV=development
-
     - npm-install
+    - script:
+        code: cp ./* $WERCKER_OUTPUT_DIR
+    - script:
+        code: npm i -g pm2
 
 test:
   steps:
@@ -16,6 +19,12 @@ test:
         code: |
           npm test
 
+# build:
+#   steps:	
+#     - script:
+#         code: docker build -t node-app .
+#     - script:
+#         code: docker tag node-app:latest 433478262461.dkr.ecr.us-east-1.amazonaws.com/node-app:latest
 # release-build:
 #   steps:
 #     - script:
@@ -32,8 +41,6 @@ test:
 
 push-to-ecr:
   steps:
-    - script:
-        code: env
     - internal/docker-push:
         aws-access-key: $AWS_ACCESS_KEY_ID
         aws-secret-key: $AWS_SECRET_ACCESS_KEY
@@ -41,6 +48,8 @@ push-to-ecr:
         aws-registry-id: $AWS_REGISTRY_ID
         repository: node-app
         tag: $WERCKER_GIT_BRANCH
+        cmd: "pm2-docker processes.json"
+        ports: 9999
 
 deploy-to-ecs:
   steps:
