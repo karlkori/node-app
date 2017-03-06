@@ -1,0 +1,21 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  override:
+    - docker info
+    - docker build --rm=false -t node-app .
+
+# test:
+#   override:
+#     - docker run -d -p 9200:9200 circleci/elasticsearch; sleep 10
+#     - curl --retry 10 --retry-delay 5 -v http://localhost:9200
+
+deployment:
+  hub:
+    branch: development
+    commands:
+      - eval $(aws ecr get-login --region us-east-1)
+      - docker tag node-app:latest 433478262461.dkr.ecr.us-east-1.amazonaws.com/node-app:development
+      - docker push 433478262461.dkr.ecr.us-east-1.amazonaws.com/node-app:development
