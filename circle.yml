@@ -31,4 +31,5 @@ deployment:
       - eval $(aws ecr get-login --region us-east-1)
       - docker tag node-app:development 433478262461.dkr.ecr.us-east-1.amazonaws.com/node-app:development
       - docker push 433478262461.dkr.ecr.us-east-1.amazonaws.com/node-app:development
+      - chmod +x ./deploy.sh
       - ./deploy.sh      
