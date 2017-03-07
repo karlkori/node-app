@@ -4,6 +4,7 @@ machine:
 
 dependencies:
   override:
+    - curl -L -o ~/bin/jq https://github.com/stedolan/jq/releases/download/jq-1.5rc1/jq-linux-x86_64-static && chmod +x ~/bin/jq
     - docker info
     - docker build --rm=false -t node-app .
 
@@ -12,13 +13,22 @@ dependencies:
 #     - docker run -d -p 9200:9200 circleci/elasticsearch; sleep 10
 #     - curl --retry 10 --retry-delay 5 -v http://localhost:9200
 
+# deployment:
+#   hub:
+#     branch: development
+#     commands:
+#       - eval $(aws ecr get-login --region us-east-1)
+#       - docker tag node-app:development 433478262461.dkr.ecr.us-east-1.amazonaws.com/node-app:development
+#       - docker push 433478262461.dkr.ecr.us-east-1.amazonaws.com/node-app:development
+#       - echo "Rastarting TASK"
+#       - task_arn=$(aws ecs list-tasks --cluster default --service-name node-app-service | grep arn | cut -d'"' -f2) && aws ecs stop-task --cluster default --task $task_arn
+#       - echo "Rastarting TASK  $task_arn"
+
 deployment:
-  hub:
+  development:
     branch: development
     commands:
       - eval $(aws ecr get-login --region us-east-1)
-      - docker tag node-app:latest 433478262461.dkr.ecr.us-east-1.amazonaws.com/node-app:development
+      - docker tag node-app:development 433478262461.dkr.ecr.us-east-1.amazonaws.com/node-app:development
       - docker push 433478262461.dkr.ecr.us-east-1.amazonaws.com/node-app:development
-      - echo "Rastarting TASK"
-      - task_arn=$(aws ecs list-tasks --cluster default --service-name node-app-service | grep arn | cut -d'"' -f2) && aws ecs stop-task --cluster default --task $task_arn
-      - echo "Rastarting TASK  $task_arn"
+      - ./deploy.sh      
