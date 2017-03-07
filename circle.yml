@@ -7,6 +7,10 @@ dependencies:
     - curl -L -o ~/bin/jq https://github.com/stedolan/jq/releases/download/jq-1.5rc1/jq-linux-x86_64-static && chmod +x ~/bin/jq
     - docker info
     - docker build --rm=false -t node-app:$CIRCLE_BRANCH .
+    
+test:
+  override:
+    - echo "no tests are specified"
 
 deployment:
   development:
