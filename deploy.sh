@@ -7,17 +7,16 @@ set -o pipefail
 # more bash-friendly output for jq
 JQ="jq --raw-output --exit-status"
 
-# deploy_image() {
-
-#     docker login -u $DOCKER_USERNAME -p $DOCKER_PASS -e $DOCKER_EMAIL
-#     docker push bellkev/circle-ecs:$CIRCLE_SHA1 | cat # workaround progress weirdness
-
-# }
-
 configureAwsCli(){
 	aws --version
 	aws configure set default.region us-east-1
 	aws configure set default.output json
+}
+
+pushImage() {
+   eval $(aws ecr get-login --region us-east-1)
+   docker tag node-app:$CIRCLE_BRANCH 433478262461.dkr.ecr.us-east-1.amazonaws.com/node-app:$CIRCLE_BRANCH
+   docker push 433478262461.dkr.ecr.us-east-1.amazonaws.com/node-app:$CIRCLE_BRANCH
 }
 
 makeTaskDefinition() {
@@ -93,5 +92,5 @@ deployCluster() {
 }
 
 configureAwsCli
-# deploy_image
+pushImage
 deployCluster
